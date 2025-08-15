@@ -1,0 +1,37 @@
+## APM Lab - Step 0: Clean Environment
+## No Datadog Agent, No APM instrumentation
+name: apm-lab-step0
+services:
+  ddtimer:
+    image: lancel00zz/ddtimer:apm-lab-step0
+    ports:
+      - "5049:5050"
+    restart: unless-stopped
+    environment:
+      - FLASK_ENV=development
+      - DATABASE_URL=postgresql://ddtimer:ddtimerpassword@db:5432/ddtimerdb
+    labels:
+      com.datadoghq.ad.logs: '[{"source": "docker"}]'
+    networks:
+      - ddtimer-network
+
+  db:
+    image: postgres:15
+    restart: unless-stopped
+    ports:
+      - "5439:5432"
+    environment:
+      POSTGRES_DB: ddtimerdb
+      POSTGRES_USER: ddtimer
+      POSTGRES_PASSWORD: ddtimerpassword
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - ddtimer-network
+
+networks:
+  ddtimer-network:
+    driver: bridge
+
+volumes:
+  db_data:
