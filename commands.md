@@ -11,7 +11,7 @@ docker --version
 git clone git@github.com:lance100zz/ddtimer-apm-lab.git
 ```
 
-## Step 0: Baseline Application
+## Step 0: install ddtimer (bare - no Datadog)
 ```bash
 # Start baseline environment
 docker compose -f docker-compose.apm-lab-step0.yml up -d
@@ -23,7 +23,7 @@ docker ps
 http://localhost:5049
 ```
 
-## Step 1: Add Datadog Agent
+## Step 1: Add Datadog Agent as a side car
 ```bash
 # Create an environment template for your API key
 cp .env.example .env
@@ -38,7 +38,7 @@ docker compose -f docker-compose.apm-lab-step0.yml down
 docker compose -f docker-compose.apm-lab-step1.yml up -d
 ```
 
-## Step 2: Enable APM
+## Step 2: Enable APM 
 ```bash
 # Stop step 1
 docker compose -f docker-compose.apm-lab-step1.yml down
@@ -47,7 +47,7 @@ docker compose -f docker-compose.apm-lab-step1.yml down
 docker compose -f docker-compose.apm-lab-step2.yml up -d
 ```
 
-## Step 3: Performance Optimization
+## Step 3: Performance Optimized
 ```bash
 # Stop step 2
 docker compose -f docker-compose.apm-lab-step2.yml down
