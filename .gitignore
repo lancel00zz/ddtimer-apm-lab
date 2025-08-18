@@ -1,40 +1,15 @@
-# Python
-__pycache__/
-*.py[cod]
-*.pyo
-*.pyd
-*.pyc
-
-# Virtual environments
-venv/
-
-# macOS
-.DS_Store
-.AppleDouble
-.LSOverride
-
-# Editor settings
-.vscode/
-.idea/
-*.swp
-
-# Node modules and lock files
-node_modules/
-package-lock.json
-
-# Log files
-*.log
-
-# Backup or temp files
-*.bak
-*.tmp
-*~
-
-# Flask runtime files
-instance/
+# Datadog API keys (essential for lab security)
 .env
 
-# Docker
+# System files
+.DS_Store
+
+# Editor files
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Docker temps
 *.pid
-*.sock
-debug.log
