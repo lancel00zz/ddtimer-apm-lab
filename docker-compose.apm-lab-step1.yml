@@ -1,0 +1,67 @@
+## APM Lab - Step 1: Add Datadog Agent Container
+## Infrastructure monitoring with basic service and source tagging
+name: apm-lab-step1
+services:
+  ddtimer:
+    image: lancel00zz/ddtimer:apm-lab-step0
+    ports:
+      - "5049:5050"
+    restart: unless-stopped
+    environment:
+      - FLASK_ENV=development
+      - DATABASE_URL=postgresql://ddtimer:ddtimerpassword@db:5432/ddtimerdb
+    labels:
+      # Datadog log collection with service and source tags
+      com.datadoghq.ad.logs: '[{"source": "flask", "service": "ddtimer"}]'
+    networks:
+      - ddtimer-network
+
+  db:
+    image: postgres:15
+    restart: unless-stopped
+    ports:
+      - "5439:5432"
+    environment:
+      POSTGRES_DB: ddtimerdb
+      POSTGRES_USER: ddtimer
+      POSTGRES_PASSWORD: ddtimerpassword
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    labels:
+      # Datadog log collection for PostgreSQL
+      com.datadoghq.ad.logs: '[{"source": "postgresql", "service": "ddtimer-db"}]'
+    networks:
+      - ddtimer-network
+
+  datadog-agent:
+    image: gcr.io/datadoghq/agent:7
+    platform: linux/amd64
+    environment:
+      # API Configuration
+      - DD_API_KEY=${DD_API_KEY}
+      - DD_SITE=datadoghq.com
+      
+      # Log Collection
+      - DD_LOGS_ENABLED=true
+      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+      - DD_CONTAINER_EXCLUDE_LOGS=name:datadog-agent
+      
+      # Global Environment Tags
+      - DD_ENV=lab
+      - DD_TAGS=version:step1 team:training
+    volumes:
+      # Essential volume mounts (cross-platform compatible)
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+    restart: unless-stopped
+    networks:
+      - ddtimer-network
+
+networks:
+  ddtimer-network:
+    driver: bridge
+
+volumes:
+  db_data:

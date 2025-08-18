@@ -1,0 +1,79 @@
+## APM Lab - Step 3: Optimized APM Performance
+## Same as Step 2 but with performance optimizations (reduced duplicate calls)
+name: apm-lab-step3
+services:
+  ddtimer:
+    image: lancel00zz/ddtimer:apm-lab-step3
+    ports:
+      - "5049:5050"
+    restart: unless-stopped
+    environment:
+      - FLASK_ENV=development
+      - DATABASE_URL=postgresql://ddtimer:ddtimerpassword@db:5432/ddtimerdb
+      
+      # APM Configuration
+      - DD_TRACE_ENABLED=true
+      - DD_SERVICE=ddtimer
+      - DD_ENV=lab
+      - DD_VERSION=step3
+      - DD_AGENT_HOST=datadog-agent
+      - DD_TRACE_AGENT_PORT=8126
+    labels:
+      # Datadog log collection with service and source tags
+      com.datadoghq.ad.logs: '[{"source": "flask", "service": "ddtimer"}]'
+    networks:
+      - ddtimer-network
+
+  db:
+    image: postgres:15
+    restart: unless-stopped
+    ports:
+      - "5439:5432"
+    environment:
+      POSTGRES_DB: ddtimerdb
+      POSTGRES_USER: ddtimer
+      POSTGRES_PASSWORD: ddtimerpassword
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    labels:
+      # Datadog log collection for PostgreSQL
+      com.datadoghq.ad.logs: '[{"source": "postgresql", "service": "ddtimer-db"}]'
+    networks:
+      - ddtimer-network
+
+  datadog-agent:
+    image: gcr.io/datadoghq/agent:7
+    platform: linux/amd64
+    environment:
+      # API Configuration
+      - DD_API_KEY=${DD_API_KEY}
+      - DD_SITE=datadoghq.com
+      
+      # Log Collection
+      - DD_LOGS_ENABLED=true
+      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+      - DD_CONTAINER_EXCLUDE_LOGS=name:datadog-agent
+      
+      # APM Configuration (ready for step 2)
+      - DD_APM_ENABLED=true
+      - DD_APM_NON_LOCAL_TRAFFIC=true
+      
+      # Global Environment Tags
+      - DD_ENV=lab
+      - DD_TAGS=version:step3 team:training
+    volumes:
+      # Essential volume mounts (cross-platform compatible)
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+    restart: unless-stopped
+    networks:
+      - ddtimer-network
+
+networks:
+  ddtimer-network:
+    driver: bridge
+
+volumes:
+  db_data:
