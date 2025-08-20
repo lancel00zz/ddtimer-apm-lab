@@ -10,8 +10,6 @@ services:
     environment:
       - FLASK_ENV=development
       - DATABASE_URL=postgresql://ddtimer:ddtimerpassword@db:5432/ddtimerdb
-    labels:
-      com.datadoghq.ad.logs: '[{"source": "docker"}]'
     networks:
       - ddtimer-network
 
