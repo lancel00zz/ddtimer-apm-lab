@@ -1,4 +1,4 @@
-# Lab Commands Reference
+**to convert .md to .docx, run "pandoc <path/to/.md> -o <path/to/.docx>"**
 
 The following instructions are designed **specifically for the APM Lab**, which covers installing **Docker Desktop** and running the **Datadog Agent as a sidecar**.  
  
@@ -8,10 +8,11 @@ It is intended as a facilitator to support participants through the installation
 
 Copy and paste these commands to follow along through the lab:
 
+# Lab Commands Reference
 
 ## Install Docker Desktop
 ```bash
-# if not installed, browse to the address below to select the appropriate version
+# if not installed locally, browse to the address below to select the appropriate version
 # of Docker-Desktop to install
 https://docs.docker.com/desktop/setup/install/mac-install/
 ```
