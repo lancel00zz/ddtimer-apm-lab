@@ -1,6 +1,12 @@
 # Lab Commands Reference
 
-Copy and paste these commands in order during the lab:
+The following instructions are designed **specifically for the APM Lab**, which covers installing **Docker Desktop** and running the **Datadog Agent as a sidecar**.  
+ 
+This document **complements the “APM Lab” presentation slides** and has not been designed to be used as a stand-alone guide.  
+It is intended as a facilitator to support participants through the installation and configuration phases of the lab.
+
+Copy and paste these commands to run the lab:
+
 
 ## Install Docker Desktop
 ```bash
