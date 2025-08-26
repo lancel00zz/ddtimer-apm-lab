@@ -3,31 +3,34 @@
 The following instructions are designed **specifically for the APM Lab**, which covers installing **Docker Desktop** and running the **Datadog Agent as a sidecar**.  
  
 This document **complements the “APM Lab” presentation slides** and has not been designed to be used as a stand-alone guide.  
+
 It is intended as a facilitator to support participants through the installation and configuration phases of the lab.
 
-Copy and paste these commands to run the lab:
+Copy and paste these commands to follow along through the lab:
 
 
 ## Install Docker Desktop
 ```bash
-# if not installed on your computer
+# if not installed, browse to the address below to select the appropriate version
+# of Docker-Desktop to install
 https://docs.docker.com/desktop/setup/install/mac-install/
 ```
 
 ## Clone the lab repository
 ```bash
-# create a directory for the lab files
-# select it with Terminal and run the line to clone the repo:
+# ⚠️ Create a local folder for the lab files ⚠️
+# ⚠️ In Terminal, cd into this folder -  all following commands must be run here ⚠️
+
+# cloning the repo:
 git clone git@github.com:lance100zz/ddtimer-apm-lab.git
 ```
 
 ## Install ddtimer
 ```bash
 # this is "customer-like" application with no Datadog instrumentation whatsoever at this point
-# when you will run the command it will create an docker environment on your computer
 docker compose -f docker-compose.apm-lab-step0.yml up -d
 
-# Open the "customer-like" ddtimer app from your browser: 
+# Open ddtimer app from your browser: 
 http://localhost:5049
 ```
 
@@ -38,6 +41,7 @@ http://localhost:5049
 # Make sure to toggle "Log Management" to ON
 # In the UI, select your real API Key with the blue "Select API Key" button, 
 # or paste it directly in the command below BEFORE TO RUN IT!
+
 docker run -d --name dd-agent \
 -e DD_API_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX \
 -e DD_SITE="datadoghq.com" \
@@ -55,11 +59,11 @@ gcr.io/datadoghq/agent:7
 
 ## Add Datadog Agent as a side car (through Docker-Compose)
 ```bash
-# Create an environment template for you API key (not hard-coded in Docker-Compose)
+# Create an environment file to store your API key (not hard-coded in Docker-Compose)
 # and edit it with your real API key (copy-paste)
 cp .env.example .env
 
-# Stop all ddtimer running containers by clicking "🗑️" on Docker Desktop, 
+# Stop all ddtimer running containers by clicking "🗑️" on Docker Desktop UI, 
 # or from the terminal by running each line below in sequence:
 docker stop dd-agent
 docker rm dd-agent
