@@ -10,7 +10,7 @@ Copy and paste these commands to run the lab:
 
 ## Install Docker Desktop
 ```bash
-# if not installed on you computer
+# if not installed on your computer
 https://docs.docker.com/desktop/setup/install/mac-install/
 ```
 
@@ -33,7 +33,7 @@ http://localhost:5049
 
 ## Add Datadog Agent as a side car (through Terminal)
 ```bash
-# Get the command line from your account in Datagog UI:
+# Get the command line from your account in Datadog UI:
 # Integrations -> Fleet Automation -> Install Agents -> Docker
 # Make sure to toggle "Log Management" to ON
 # In the UI, select your real API Key with the blue "Select API Key" button, 
@@ -52,13 +52,14 @@ docker run -d --name dd-agent \
 -v /var/lib/docker/containers:/var/lib/docker/containers:ro \
 gcr.io/datadoghq/agent:7
 ```
+
 ## Add Datadog Agent as a side car (through Docker-Compose)
 ```bash
 # Create an environment template for you API key (not hard-coded in Docker-Compose)
 # and edit it with your real API key (copy-paste)
 cp .env.example .env
 
-# Stop all ddtimer running containers by cliking "🗑️" on Docker Desktop, 
+# Stop all ddtimer running containers by clicking "🗑️" on Docker Desktop, 
 # or from the terminal by running each line below in sequence:
 docker stop dd-agent
 docker rm dd-agent
