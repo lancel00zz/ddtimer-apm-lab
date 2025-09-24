@@ -23,7 +23,7 @@ https://docs.docker.com/desktop/setup/install/mac-install/
 # ⚠️ In Terminal, cd into this folder -  all following commands must be run here ⚠️
 
 # cloning the repo:
-git clone git@github.com:lance100zz/ddtimer-apm-lab.git
+git clone git@github.com:lancel00zz/ddtimer-apm-lab.git
 ```
 
 ## Install ddtimer
