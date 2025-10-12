@@ -50,7 +50,7 @@ services:
       
       # Global Environment and Tags
       - DD_ENV=lab
-      - DD_TAGS=team:enablement,cost-center:sales
+      - DD_TAGS=team:enablement cost-center:sales
       
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
