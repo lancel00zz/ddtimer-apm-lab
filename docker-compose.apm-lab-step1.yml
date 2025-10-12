@@ -1,5 +1,5 @@
 ## APM Lab - Step 1: Add Datadog Agent Container
-## Infrastructure monitoring with basic service and source tagging
+## Infrastructure monitoring with best practice autodiscovery tags
 name: apm-lab-step1
 services:
   ddtimer:
@@ -11,8 +11,9 @@ services:
       - FLASK_ENV=development
       - DATABASE_URL=postgresql://ddtimer:ddtimerpassword@db:5432/ddtimerdb
     labels:
-      # Datadog log collection with service and source tags
+      # Datadog autodiscovery for log collection and container metrics
       com.datadoghq.ad.logs: '[{"source": "flask", "service": "ddtimer"}]'
+      com.datadoghq.ad.tags: '["env:lab", "version:1.0.0", "project:apm-lab", "component:frontend"]'
     networks:
       - ddtimer-network
 
@@ -28,8 +29,9 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
     labels:
-      # Datadog log collection for PostgreSQL
+      # Datadog autodiscovery for log collection and container metrics
       com.datadoghq.ad.logs: '[{"source": "postgresql", "service": "ddtimer-db"}]'
+      com.datadoghq.ad.tags: '["env:lab", "version:1.0.0", "project:apm-lab", "component:database"]'
     networks:
       - ddtimer-network
 
@@ -46,11 +48,11 @@ services:
       - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
       - DD_CONTAINER_EXCLUDE_LOGS=name:datadog-agent
       
-      # Global Environment Tags
+      # Global Environment and Tags
       - DD_ENV=lab
-      - DD_TAGS=version:step1 team:training
+      - DD_TAGS=team:enablement,cost-center:sales
+      
     volumes:
-      # Essential volume mounts (cross-platform compatible)
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /proc/:/host/proc/:ro
       - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
