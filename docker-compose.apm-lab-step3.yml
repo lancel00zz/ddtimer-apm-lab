@@ -12,11 +12,11 @@ services:
       - DATABASE_URL=postgresql://ddtimer:ddtimerpassword@db:5432/ddtimerdb
       
       # APM Environment Variables (full instrumentation enabled)
+      - DD_TRACE_ENABLED=true
       - DD_SERVICE=ddtimer
       - DD_ENV=lab
       - DD_VERSION=1.0.0
       - DD_AGENT_HOST=datadog-agent
-      - DD_APM_ENABLED=true
     labels:
       com.datadoghq.ad.logs: '[{"source": "flask", "service": "ddtimer"}]'
       com.datadoghq.ad.tags: '["service:ddtimer", "env:lab", "version:1.0.0", "project:apm-lab", "component:frontend"]'
