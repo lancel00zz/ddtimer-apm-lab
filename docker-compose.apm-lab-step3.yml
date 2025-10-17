@@ -18,8 +18,8 @@ services:
       - DD_VERSION=1.0.0
       - DD_AGENT_HOST=datadog-agent
     labels:
-      com.datadoghq.ad.logs: '[{"source": "flask", "service": "ddtimer"}]'
-      com.datadoghq.ad.tags: '["service:ddtimer", "env:lab", "version:1.0.0", "project:apm-lab", "component:frontend"]'
+      com.datadoghq.ad.logs: '[{"source": "flask", "service": "ddtimer", "env": "lab", "version": "step3"}]'
+      com.datadoghq.ad.tags: '["service:ddtimer", "env:lab", "version:step3", "project:apm-lab", "component:frontend"]'
     networks:
       - ddtimer-network
 
@@ -41,8 +41,8 @@ services:
       - db_data:/var/lib/postgresql/data
     labels:
       # Datadog autodiscovery for log collection and container metrics
-      com.datadoghq.ad.logs: '[{"source": "postgresql", "service": "ddtimer-db"}]'
-      com.datadoghq.ad.tags: '["service:ddtimer-db", "env:lab", "version:1.0.0", "project:apm-lab", "component:database"]'
+      com.datadoghq.ad.logs: '[{"source": "postgresql", "service": "ddtimer-db", "env": "lab", "version": "step3"}]'
+      com.datadoghq.ad.tags: '["service:ddtimer-db", "env:lab", "version:step3", "project:apm-lab", "component:database"]'
     networks:
       - ddtimer-network
 
@@ -65,7 +65,7 @@ services:
       
       # Global Environment and Tags
       - DD_ENV=lab
-      - DD_TAGS=team:enablement cost-center:sales
+      - DD_TAGS=team:enablement cost-center:sales creator:pza
       
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
