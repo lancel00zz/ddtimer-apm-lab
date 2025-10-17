@@ -50,6 +50,7 @@ services:
       
       # Global Environment and Tags
       - DD_ENV=lab
+      - DD_SERVICE=datadog-agent
       - DD_TAGS=team:enablement cost-center:sales creator:pza
       
     volumes:
