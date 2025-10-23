@@ -46,13 +46,15 @@ services:
       # Log Collection
       - DD_LOGS_ENABLED=true
       - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
-      - DD_CONTAINER_EXCLUDE_LOGS=name:datadog-agent
       
       # Global Environment and Tags
       - DD_ENV=lab
-      - DD_SERVICE=datadog-agent
-      - DD_TAGS=team:enablement cost-center:sales creator:pza
+      - DD_TAGS=team:enablement cost-center:sales
       
+    labels:
+      # Collect agent logs with Docker source to demonstrate Docker log pipeline
+      com.datadoghq.ad.logs: '[{"source": "docker", "service": "datadog-agent", "env": "lab", "version": "step1"}]'
+      com.datadoghq.ad.tags: '["service:datadog-agent", "env:lab", "version:step1", "component:agent"]'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /proc/:/host/proc/:ro
