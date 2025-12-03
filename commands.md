@@ -1,12 +1,12 @@
 # APM Lab Commands Reference
 
-## Clone the lab repository
-Location of the repo:
+## Repository
+
 ```bash
 https://github.com/lancel00zz/ddtimer-apm-lab
 ```
 
-# clone the repo
+### Clone the repo
 ```bash
 mkdir ~/Desktop/repo
 ```
@@ -17,12 +17,12 @@ cd ~/Desktop/repo
 git clone git@github.com:lancel00zz/ddtimer-apm-lab.git
 ```
 
-## Install Docker Desktop
+### Install Docker Desktop
 ```bash
 brew install --cask docker
 ```
 
-## Install Step 0
+### Install Step 0 (2 containers: ddtimer and db)
 ```bash
 cd ~/Desktop/repo/ddtimer-apm-lab
 ```
@@ -30,34 +30,37 @@ cd ~/Desktop/repo/ddtimer-apm-lab
 docker compose -f docker-compose.apm-lab-step0.yml up -d
 ```
 
-# Open ddtimer app from your browser: 
+Run ddtimer app from your browser: 
 ```bash
 http://localhost:5049
 ```
 
-## Install Step 1
-# create the .env file
+### Install Step 1 (3 containers: ddtimer, db and datadog-agent)
+create the .env file
 ```bash
 cp env.example .env
 ```
 ```bash
 nano .env
 ```
-
-# install step 1 environment
+install docker-compose step 1
 ```bash
 docker compose -f docker-compose.apm-lab-step1.yml up -d
 ```
 
-## Install Step 2 
+### Install Step 2 (3 containers with APM instrumented)
 ```bash
 docker compose -f docker-compose.apm-lab-step1.yml down
+```
+```bash
 docker compose -f docker-compose.apm-lab-step2.yml up -d
 ```
 
-## Install Step 3
+### Install Step 3 (3 containers with bug fixed)
 ```bash
 docker compose -f docker-compose.apm-lab-step2.yml down
+```
+```bash
 docker compose -f docker-compose.apm-lab-step3.yml up -d
 ```
 
