@@ -28,7 +28,7 @@ http://localhost:5049
 ## Install Step 1
 ```bash
 # create the .env file
-cp .env.example .env
+cp env.example .env
 nano .env
 
 # install step 1 environment
