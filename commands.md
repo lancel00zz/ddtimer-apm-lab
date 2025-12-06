@@ -1,4 +1,3 @@
-# APM Lab Commands Reference
 
 ### Repository
 
@@ -67,5 +66,3 @@ docker compose -f docker-compose.apm-lab-step2.yml up -d
 ```bash
 docker compose -f docker-compose.apm-lab-step3.yml up -d
 ```
-
-
