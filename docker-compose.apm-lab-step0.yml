@@ -3,13 +3,15 @@
 name: apm-lab-step0
 services:
   ddtimer:
-    image: lancel00zz/ddtimer:apm-lab-step0
+    image: lancel00zz/ddtimer:apm00
     ports:
       - "5049:5050"
     restart: unless-stopped
     environment:
       - FLASK_ENV=development
       - DATABASE_URL=postgresql://ddtimer:ddtimerpassword@db:5432/ddtimerdb
+    labels:
+      com.datadoghq.ad.logs: '[{"source": "docker"}]'
     networks:
       - ddtimer-network
 
