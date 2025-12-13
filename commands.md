@@ -25,10 +25,10 @@ brew install --cask docker
 ```
 
 
-### Install Step 0 (2 containers: ddtimer and db)
+### Install Baseline Scenario (2 containers: ddtimer and db)
 
 ```bash
-docker compose -f docker-compose.apm-lab-step0.yml up -d
+docker compose -f docker-compose.apm-lab-0-baseline.yml up -d
 ```
 
 Run ddtimer app from your browser: 
@@ -38,7 +38,7 @@ http://localhost:5049
 
 
 
-### Install Step 1 (3 containers: ddtimer, db and datadog-agent)
+### Install Infra Scenario (3 containers: ddtimer, db and datadog-agent)
 
 create the .env file
 ```bash
@@ -50,19 +50,19 @@ nano .env
 
 install docker-compose step 1
 ```bash
-docker compose -f docker-compose.apm-lab-step1.yml up -d
+docker compose -f docker-compose.apm-lab-1-infra.yml up -d
 ```
 
 
-### Install Step 2 (3 containers with APM instrumented)
+### Install APM Scenario (3 containers with APM instrumented)
 
 ```bash
-docker compose -f docker-compose.apm-lab-step2.yml up -d
+docker compose -f docker-compose.apm-lab-2-apm.yml up -d
 ```
 
 
-### Install Step 3 (3 containers with bug fixed)
+### Install APM-fixed Scenario (3 containers with APM bug fixed)
 
 ```bash
-docker compose -f docker-compose.apm-lab-step3.yml up -d
+docker compose -f docker-compose.apm-lab-3-apm-fixed.yml up -d
 ```

@@ -1,9 +1,11 @@
-## APM Lab - Step 2: Full APM Instrumentation
-## Infrastructure monitoring + APM traces with automatic instrumentation + Log correlation
-name: apm-lab-step2
+## APM Lab 4.9.6 - 3-APM-FIXED: Full APM Instrumentation - Bug Fixed!
+
+## Infrastructure monitoring + APM traces with automatic instrumentation
+## The duplicate /qr-image call has been fixed!
+name: apm-lab-3-apm-fixed
 services:
   ddtimer:
-    image: lancel00zz/ddtimer:apm02
+    image: lancel00zz/ddtimer:3-apm-fixed
     ports:
       - "5049:5050"
     restart: unless-stopped
@@ -15,22 +17,21 @@ services:
       - DD_TRACE_ENABLED=true
       - DD_SERVICE=ddtimer
       - DD_ENV=lab
-      - DD_VERSION=step2
+      - DD_VERSION=3-apm-fixed
       - DD_AGENT_HOST=datadog-agent
       - DD_TRACE_AGENT_PORT=8126
 
       # Runtime Metrics (Python-specific application metrics)
       - DD_RUNTIME_METRICS_ENABLED=true
       - DD_RUNTIME_METRICS_RUNTIME_ID_ENABLED=true
-      - DD_DOGSTATSD_PORT=8125
 
       # Log-Trace Correlation
       - DD_LOGS_INJECTION=true
 
     labels:
-      # Datadog log collection with JSON parsing for trace correlation
-      com.datadoghq.ad.logs: '[{"source": "python", "service": "ddtimer", "sourcecategory": "sourcecode"}]'
-      com.datadoghq.ad.tags: '["service:ddtimer", "env:lab", "version:step2", "project:apm-lab", "component:frontend"]'
+      # Datadog log collection with service and source tags
+      com.datadoghq.ad.logs: '[{"source": "flask", "service": "ddtimer", "env": "lab", "version": "3-apm-fixed"}]'
+      com.datadoghq.ad.tags: '["service:ddtimer", "env:lab", "version:3-apm-fixed", "project:apm-lab", "component:frontend"]'
     networks:
       - ddtimer-network
 
@@ -43,23 +44,17 @@ services:
       POSTGRES_DB: ddtimerdb
       POSTGRES_USER: ddtimer
       POSTGRES_PASSWORD: ddtimerpassword
-
-      # APM Environment Variables (for database integrations)
-      DD_SERVICE: ddtimer-db
-      DD_ENV: lab  
-      DD_VERSION: step2
-
     volumes:
       - db_data:/var/lib/postgresql/data
     labels:
-      # Datadog log collection for PostgreSQL
-      com.datadoghq.ad.logs: '[{"source": "postgresql", "service": "ddtimer-db", "env": "lab", "version": "step2"}]'
-      com.datadoghq.ad.tags: '["service:ddtimer-db", "env:lab", "version:step2", "project:apm-lab", "component:database"]'
+      # Datadog autodiscovery for log collection and container metrics
+      com.datadoghq.ad.logs: '[{"source": "postgresql", "service": "ddtimer-db", "env": "lab", "version": "3-apm-fixed"}]'
+      com.datadoghq.ad.tags: '["service:ddtimer-db", "env:lab", "version:3-apm-fixed", "project:apm-lab", "component:database"]'
     networks:
       - ddtimer-network
 
   datadog-agent:
-    image: gcr.io/datadoghq/agent:7.67.0
+    image: gcr.io/datadoghq/agent:7
     platform: linux/amd64
     environment:
       # API Configuration
@@ -76,14 +71,13 @@ services:
       - DD_APM_NON_LOCAL_TRAFFIC=true
 
       # Infrastructure Metrics Collection
-      # Collects CPU, memory, process metrics. Also from Docker and DogStatsD.
       - DD_PROCESS_AGENT_ENABLED=true
       - DD_CONTAINER_COLLECT_ALL=true
       - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true
       
-      # Global Environment Tags
+      # Global Environment and Tags
       - DD_ENV=lab
-      - DD_TAGS=cost-center:sales, team:training
+      - DD_TAGS=team:enablement cost-center:sales version:3-apm-fixed
 
     volumes:
       # Essential volume mounts (cross-platform compatible)
@@ -101,3 +95,4 @@ networks:
 
 volumes:
   db_data:
+

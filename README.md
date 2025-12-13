@@ -1,20 +1,14 @@
-# ddTimer APM Lab
+# Datadog APM Lab
 
-This hands-on lab teaches Datadog Application Performance Monitoring (APM) fundamentals using a sample Flask timer application. You'll progress through 4 steps: baseline setup, adding the Datadog Agent, enabling APM instrumentation, and analyzing performance bottlenecks.
+Lab environment for the **Datadog APM Hands-On Workshop**.
 
-The lab demonstrates distributed tracing, flame graphs, span analysis, and real-world performance optimization. Students will learn how to instrument applications, configure the Datadog Agent as a sidecar container, and use APM data to identify and fix application issues. Perfect for Technical Solutions engineers getting hands-on experience with Datadog's observability platform.
+> ⚠️ This repository is used during facilitated live sessions. It is not designed for self-paced learning without the accompanying workshop materials.
 
-## Quick Start
+## Prerequisites
 
-1. **Prerequisites**: Docker Desktop installed
-2. **Setup**: `cp .env.example .env` and add your Datadog API key
-3. **Follow along**: Use `commands.md` for copy/paste terminal commands
-4. **Access app**: http://localhost:5049 once containers are running
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- Datadog account with API key
 
-## Lab Steps
-- **Step 0**: Baseline Flask + PostgreSQL application
-- **Step 1**: Add Datadog Agent sidecar container  
-- **Step 2**: Enable APM tracing with ddtrace instrumentation
-- **Step 3**: Analyze and fix performance bottlenecks
+## Setup
 
-See `commands.md` for all terminal commands in chronological order.
+See [commands.md](commands.md) for all instructions.

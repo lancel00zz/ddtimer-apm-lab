@@ -1,17 +1,16 @@
-## APM Lab - Step 0: Clean Environment
+## APM Lab 4.9.6 - 0-Baseline: Clean Environment
+
 ## No Datadog Agent, No APM instrumentation
-name: apm-lab-step0
+name: apm-lab-0-baseline
 services:
   ddtimer:
-    image: lancel00zz/ddtimer:apm00
+    image: lancel00zz/ddtimer:0-baseline
     ports:
       - "5049:5050"
     restart: unless-stopped
     environment:
       - FLASK_ENV=development
       - DATABASE_URL=postgresql://ddtimer:ddtimerpassword@db:5432/ddtimerdb
-    labels:
-      com.datadoghq.ad.logs: '[{"source": "docker"}]'
     networks:
       - ddtimer-network
 

@@ -1,17 +1,8 @@
-# Datadog API keys (essential for lab security)
+# Environment files (contain API keys)
 .env
 
-# System files
+# OS files
 .DS_Store
 
-# Editor files
-.vscode/
-.idea/
-
-# Logs
+# Docker
 *.log
-
-# Docker temps
-*.pid
-
-
