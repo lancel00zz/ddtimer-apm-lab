@@ -24,7 +24,7 @@ services:
     labels:
       # Datadog autodiscovery for log collection and container metrics
       com.datadoghq.ad.logs: '[{"source": "flask", "service": "ddtimer", "env": "lab", "version": "2-apm"}]'
-      com.datadoghq.ad.tags: '["service:ddtimer", "env:lab", "version:2-apm"]'
+      com.datadoghq.ad.tags: '["service:ddtimer", "env:lab", "version:2-apm", "project:apm-lab", "component:frontend"]'
     networks:
       - ddtimer-network
 
@@ -40,7 +40,7 @@ services:
     labels:
       # Datadog autodiscovery for log collection and container metrics
       com.datadoghq.ad.logs: '[{"source": "postgresql", "service": "ddtimer-db", "env": "lab", "version": "2-apm"}]'
-      com.datadoghq.ad.tags: '["service:ddtimer-db", "env:lab", "version:2-apm"]'
+      com.datadoghq.ad.tags: '["service:ddtimer-db", "env:lab", "version:2-apm", "project:apm-lab", "component:database"]'
     volumes:
       - db_data:/var/lib/postgresql/data
     networks:
