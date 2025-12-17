@@ -11,7 +11,7 @@ services:
       - FLASK_ENV=development
       - DATABASE_URL=postgresql://ddtimer:ddtimerpassword@db:5432/ddtimerdb
     labels:
-      # Datadog log collection with service and source tags
+      # Datadog autodiscovery for log collection and container metrics
       com.datadoghq.ad.logs: '[{"source": "flask", "service": "ddtimer", "env": "lab", "version": "1-infra"}]'
       com.datadoghq.ad.tags: '["service:ddtimer", "env:lab", "version:1-infra"]'
     networks:
@@ -26,12 +26,12 @@ services:
       POSTGRES_DB: ddtimerdb
       POSTGRES_USER: ddtimer
       POSTGRES_PASSWORD: ddtimerpassword
-    volumes:
-      - db_data:/var/lib/postgresql/data
     labels:
       # Datadog autodiscovery for log collection and container metrics
       com.datadoghq.ad.logs: '[{"source": "postgresql", "service": "ddtimer-db", "env": "lab", "version": "1-infra"}]'
-      com.datadoghq.ad.tags: '["service:ddtimer-db", "env:lab", "version:1-infra", "project:apm-lab", "component:database"]'
+      com.datadoghq.ad.tags: '["service:ddtimer-db", "env:lab", "version:1-infra"]'
+    volumes:
+      - db_data:/var/lib/postgresql/data
     networks:
       - ddtimer-network
 
@@ -41,16 +41,10 @@ services:
       # API Configuration
       - DD_API_KEY=${DD_API_KEY}
       - DD_SITE=datadoghq.com
-      
-      # Log Collection
+      # Container Log Collection
       - DD_LOGS_ENABLED=true
-      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
-      - DD_CONTAINER_EXCLUDE_LOGS=name:datadog-agent
-      
       # Container Metrics Collection
       - DD_PROCESS_AGENT_ENABLED=true
-      - DD_CONTAINER_COLLECT_ALL=true
-      
       # Global Environment and Tags
       - DD_ENV=lab
       - DD_TAGS=team:enablement cost-center:sales version:1-infra
@@ -59,7 +53,6 @@ services:
       com.datadoghq.ad.logs: '[{"source": "docker", "service": "datadog-agent", "env": "lab", "version": "1-infra"}]'
       com.datadoghq.ad.tags: '["service:datadog-agent", "env:lab", "version:1-infra"]'
     volumes:
-      # Essential volume mounts (cross-platform compatible)
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /proc/:/host/proc/:ro
       - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
