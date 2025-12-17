@@ -1,5 +1,4 @@
-## APM Lab 4.9.6 - 0-Baseline: Clean Environment
-
+## APM Lab - 0-Baseline: Clean Environment
 ## No Datadog Agent, No APM instrumentation
 name: apm-lab-0-baseline
 services:

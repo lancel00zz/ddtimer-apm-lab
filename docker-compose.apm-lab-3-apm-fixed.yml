@@ -1,5 +1,4 @@
-## APM Lab 4.9.6 - 3-APM-FIXED: Full APM Instrumentation - Bug Fixed!
-
+## APM Lab - 3-APM-Fixed: Full APM Instrumentation - Bug Fixed!
 ## Infrastructure monitoring + APM traces with automatic instrumentation
 ## The duplicate /qr-image call has been fixed!
 name: apm-lab-3-apm-fixed
@@ -54,8 +53,7 @@ services:
       - ddtimer-network
 
   datadog-agent:
-    image: gcr.io/datadoghq/agent:7
-    platform: linux/amd64
+    image: datadog/agent:7
     environment:
       # API Configuration
       - DD_API_KEY=${DD_API_KEY}
@@ -70,14 +68,18 @@ services:
       - DD_APM_ENABLED=true
       - DD_APM_NON_LOCAL_TRAFFIC=true
 
-      # Infrastructure Metrics Collection
+      # Container Metrics Collection
       - DD_PROCESS_AGENT_ENABLED=true
       - DD_CONTAINER_COLLECT_ALL=true
-      - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true
       
       # Global Environment and Tags
       - DD_ENV=lab
       - DD_TAGS=team:enablement cost-center:sales version:3-apm-fixed
+
+    labels:
+      # Datadog autodiscovery for log collection and container metrics
+      com.datadoghq.ad.logs: '[{"source": "docker", "service": "datadog-agent", "env": "lab", "version": "3-apm-fixed"}]'
+      com.datadoghq.ad.tags: '["service:datadog-agent", "env:lab", "version:3-apm-fixed"]'
 
     volumes:
       # Essential volume mounts (cross-platform compatible)

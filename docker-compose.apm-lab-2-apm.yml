@@ -1,5 +1,4 @@
-## APM Lab 4.9.6 - 2-APM: Full APM Instrumentation
-
+## APM Lab - 2-APM: Full APM Instrumentation
 ## Infrastructure monitoring + APM traces with automatic instrumentation
 name: apm-lab-2-apm
 services:
@@ -53,8 +52,7 @@ services:
       - ddtimer-network
 
   datadog-agent:
-    image: gcr.io/datadoghq/agent:7
-    platform: linux/amd64
+    image: datadog/agent:7
     environment:
       # API Configuration
       - DD_API_KEY=${DD_API_KEY}
@@ -69,15 +67,17 @@ services:
       - DD_APM_ENABLED=true
       - DD_APM_NON_LOCAL_TRAFFIC=true
 
-      # Infrastructure Metrics Collection
+      # Container Metrics Collection
       - DD_PROCESS_AGENT_ENABLED=true
       - DD_CONTAINER_COLLECT_ALL=true
-      - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true
       
       # Global Environment and Tags
       - DD_ENV=lab
       - DD_TAGS=team:enablement cost-center:sales version:2-apm
-
+    labels:
+      # Datadog autodiscovery for log collection and container metrics
+      com.datadoghq.ad.logs: '[{"source": "docker", "service": "datadog-agent", "env": "lab", "version": "2-apm"}]'
+      com.datadoghq.ad.tags: '["service:datadog-agent", "env:lab", "version:2-apm"]'
     volumes:
       # Essential volume mounts (cross-platform compatible)
       - /var/run/docker.sock:/var/run/docker.sock:ro
