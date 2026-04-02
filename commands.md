@@ -40,13 +40,17 @@ http://localhost:5049
 
 ### Install Infra Scenario (3 containers: ddtimer, db and datadog-agent)
 
-create the .env file
+create the Shell Environment Varialbe
 ```bash
-cp env.example .env
+export DD_API_KEY=
 ```
 ```bash
-nano .env
+echo $DD_API_KEY
 ```
+```bash
+printenv | grep DD
+```
+
 
 install docker-compose step 1
 ```bash
