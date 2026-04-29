@@ -27,14 +27,14 @@ colima --version
 
 ```bash
 docker --version
-if not installed:
-brew install docker
+    #if not installed then run:
+    brew install docker
 ```
 
 ```bash
 docker compose  version
-if not installed:
-brew install docker-compose
+    #if not installed then run:
+    brew install docker-compose
 ```
 
 ```bash
