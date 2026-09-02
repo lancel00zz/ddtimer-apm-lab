@@ -33,8 +33,8 @@ docker --version
 
 ```bash
 docker compose  version
-    #if not installed then run:
-    brew install docker-compose
+    #if not installed, then run the big line below in one shot:
+    brew install docker-compose && mkdir -p ~/.docker/cli-plugins && ln -sfn $(brew --prefix)/opt/docker-compose/bin/docker-compose ~/.docker/cli-plugins/docker-compose
 ```
 
 ```bash
